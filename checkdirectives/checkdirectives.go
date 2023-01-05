@@ -1,8 +1,6 @@
 package checkdirectives
 
 import (
-	"errors"
-	"go/ast"
 	"regexp"
 
 	"golang.org/x/tools/go/analysis"
@@ -16,23 +14,21 @@ var Analyzer = &analysis.Analyzer{
 
 func run(pass *analysis.Pass) (interface{}, error) {
 	for _, file := range pass.Files {
-		ast.Inspect(file, func(n ast.Node) bool {
-			comment, ok := n.(*ast.Comment)
-			if !ok {
-				return true
+		for _, group := range file.Comments {
+			for _, comment := range group.List {
+				if isIncorrectLeadingWhitespace(comment.Text) {
+					pass.ReportRangef(comment, "go directive contains leading space: %q", comment.Text)
+				}
+				if isUnrecognized(comment.Text) {
+					pass.ReportRangef(comment, "unrecognized go directive: %q", comment.Text)
+				}
 			}
-
-			if isDirectiveIncorrectLeadingWhitespace(comment.Text) {
-				pass.ReportRangef(comment, "comment contains directive")
-			}
-
-			return true
-		})
+		}
 	}
-	return nil, errors.New("not implemented yet")
+	return nil, nil
 }
 
-func isDirectiveIncorrectLeadingWhitespace(comment string) bool {
+func isIncorrectLeadingWhitespace(comment string) bool {
 	matched, err := regexp.MatchString(`//\s+go:`, comment)
 	if err != nil {
 		panic("regex invalid: " + err.Error())
@@ -40,8 +36,49 @@ func isDirectiveIncorrectLeadingWhitespace(comment string) bool {
 	return matched
 }
 
-// func getNode(fset *token.FileSet, node any) string {
-// 	s := strings.Builder{}
-// 	_ = printer.Fprint(&s, fset, node)
-// 	return s.String()
-// }
+func isUnrecognized(comment string) bool {
+	r := regexp.MustCompile(`//\s*go:([a-z_]+)`)
+	matches := r.FindStringSubmatch(comment)
+	if len(matches) == 0 {
+		return false
+	}
+	for _, k := range known {
+		if matches[1] == k {
+			return false
+		}
+	}
+	return true
+}
+
+var known = []string{
+	// Found by running the following command on the source of go.
+	// git grep -o -E -h '//go:[a-z_]+' -- ':!**/*_test.go' ':!test/' ':!**/testdata/**' | sort -u
+	"binary",
+	"build",
+	"buildsomethingelse",
+	"cgo_",
+	"cgo_dynamic_linker",
+	"cgo_export_dynamic",
+	"cgo_export_static",
+	"cgo_import_dynamic",
+	"cgo_import_static",
+	"cgo_ldflag",
+	"cgo_unsafe_args",
+	"embed",
+	"generate",
+	"linkname",
+	"name",
+	"nocheckptr",
+	"noescape",
+	"noinline",
+	"nointerface",
+	"norace",
+	"nosplit",
+	"notinheap",
+	"nowritebarrier",
+	"nowritebarrierrec",
+	"systemstack",
+	"uintptrescapes",
+	"uintptrkeepalive",
+	"yeswritebarrierrec",
+}

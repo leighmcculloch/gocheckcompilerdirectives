@@ -1,5 +1,7 @@
 package main
 
+//go:
+
 import (
 	"github.com/leighmcculloch/gocheckdirectives/checkdirectives"
 
