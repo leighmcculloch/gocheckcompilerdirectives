@@ -1,7 +1,7 @@
 package checkdirectives
 
 import (
-	"regexp"
+	"strings"
 
 	"golang.org/x/tools/go/analysis"
 )
@@ -14,27 +14,48 @@ func Analyzer() *analysis.Analyzer {
 	}
 }
 
-var reg = regexp.MustCompile(`^\s*(//(\s*)go:([a-z_]+))`)
-
 func run(pass *analysis.Pass) (interface{}, error) {
 	for _, file := range pass.Files {
 		for _, group := range file.Comments {
 			for _, comment := range group.List {
-				matches := reg.FindStringSubmatch(comment.Text)
-				if len(matches) == 0 {
+				text := comment.Text
+				if !strings.HasPrefix(text, "//") {
 					continue
 				}
+				start := 2
+				spaces := 0
+				for _, c := range text[start:] {
+					if c == ' ' {
+						spaces++
+						continue
+					}
+					break
+				}
+				start += spaces
+				if !strings.HasPrefix(text[start:], "go:") {
+					continue
+				}
+				start += 3
+				end := strings.Index(text[start:], " ")
+				if end == -1 {
+					continue
+				}
+				directive := text[start : start+end]
+				if len(directive) == 0 {
+					continue
+				}
+				prefix := text[:start+end]
 				// Leading whitespace will cause the go directive to be ignored
 				// by the compiler with no error, causing it not to work. This
 				// is an easy mistake.
-				if len(matches[2]) > 0 {
-					pass.ReportRangef(comment, "go directive contains leading space: %s", matches[1])
+				if spaces > 0 {
+					pass.ReportRangef(comment, "go directive contains leading space: %s", prefix)
 				}
 				// If the directive is unknown it will be ignored by the
 				// compiler with no error. This is an easy mistake to make,
 				// especially if you typo a directive.
-				if !isKnown(matches[3]) {
-					pass.ReportRangef(comment, "unrecognized go directive: %s", matches[1])
+				if !isKnown(directive) {
+					pass.ReportRangef(comment, "unrecognized go directive: %s", prefix)
 				}
 			}
 		}
