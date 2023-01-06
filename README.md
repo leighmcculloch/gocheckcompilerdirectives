@@ -2,6 +2,8 @@
 
 Check that go directories (`//go:` comments) are valid and catch easy mistakes.
 
+For example, directives like `//go:generate`, `//go:embed`, `//go:build`, etc.
+
 ## Why
 
 Go directives are comments in the form of `//go:` that provide an instruction
