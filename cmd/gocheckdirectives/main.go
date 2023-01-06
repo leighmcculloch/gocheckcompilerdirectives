@@ -9,5 +9,5 @@ import (
 )
 
 func main() {
-	singlechecker.Main(checkdirectives.Analyzer)
+	singlechecker.Main(checkdirectives.Analyzer())
 }
