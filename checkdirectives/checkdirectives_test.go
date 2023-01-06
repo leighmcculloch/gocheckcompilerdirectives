@@ -19,6 +19,9 @@ func FuzzRun(f *testing.F) {
 	f.Add("hello world")
 	f.Add("go:generate echo hello world")
 	f.Add("go:embed")
+	f.Add("go:embod")
+	f.Add("  go:embod")
+	f.Add("  go:embed")
 	f.Fuzz(func(t *testing.T, comment string) {
 		pass := analysis.Pass{
 			Report: func(d analysis.Diagnostic) {},
