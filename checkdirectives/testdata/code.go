@@ -1,5 +1,7 @@
 package code
 
+import _ "embed"
+
 // Okay cases:
 
 //go:generate echo hello world
