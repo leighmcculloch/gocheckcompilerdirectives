@@ -1,6 +1,6 @@
 # gocheckdirectives
 
-Check that go directories (`//go:` comments) are valid and catch easy mistakes.
+Check that go directives (`//go:` comments) are valid and catch easy mistakes.
 
 For example, directives like `//go:generate`, `//go:embed`, `//go:build`, etc.
 
