@@ -1,4 +1,4 @@
-package checkdirectives
+package checkcompilerdirectives
 
 import (
 	"strings"
@@ -8,8 +8,8 @@ import (
 
 func Analyzer() *analysis.Analyzer {
 	return &analysis.Analyzer{
-		Name: "gocheckdirectives",
-		Doc:  "Checks that go directive commenst (//go:) are valid.",
+		Name: "gocheckcompilerdirectives",
+		Doc:  "Checks that go compiler directive comments (//go:) are valid.",
 		Run:  run,
 	}
 }
@@ -49,13 +49,13 @@ func run(pass *analysis.Pass) (interface{}, error) {
 				// by the compiler with no error, causing it not to work. This
 				// is an easy mistake.
 				if spaces > 0 {
-					pass.ReportRangef(comment, "go directive contains leading space: %s", prefix)
+					pass.ReportRangef(comment, "compiler directive contains space: %s", prefix)
 				}
 				// If the directive is unknown it will be ignored by the
 				// compiler with no error. This is an easy mistake to make,
 				// especially if you typo a directive.
 				if !isKnown(directive) {
-					pass.ReportRangef(comment, "unrecognized go directive: %s", prefix)
+					pass.ReportRangef(comment, "compiler directive unrecognized: %s", prefix)
 				}
 			}
 		}
