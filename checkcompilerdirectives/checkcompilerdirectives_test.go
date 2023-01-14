@@ -4,10 +4,9 @@ import (
 	"go/ast"
 	"testing"
 
+	"4d63.com/gocheckcompilerdirectives/checkcompilerdirectives"
 	"golang.org/x/tools/go/analysis"
 	"golang.org/x/tools/go/analysis/analysistest"
-
-	"4d63.com/gocheckcompilerdirectives/checkcompilerdirectives"
 )
 
 func TestRun(t *testing.T) {
