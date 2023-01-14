@@ -7,7 +7,7 @@ import (
 	"golang.org/x/tools/go/analysis"
 	"golang.org/x/tools/go/analysis/analysistest"
 
-	"github.com/leighmcculloch/gocheckcompilerdirectives/checkcompilerdirectives"
+	"4d63.com/gocheckcompilerdirectives/checkcompilerdirectives"
 )
 
 func TestRun(t *testing.T) {

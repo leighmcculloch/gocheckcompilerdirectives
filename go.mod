@@ -1,4 +1,4 @@
-module github.com/leighmcculloch/gocheckcompilerdirectives
+module 4d63.com/gocheckcompilerdirectives
 
 go 1.19
 

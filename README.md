@@ -22,7 +22,7 @@ go:`, will cause the compiler to silently ignore the comment.
 ## Install
 
 ```
-go install github.com/leighmcculloch/gocheckcompilerdirectives@latest
+go install 4d63.com/gocheckcompilerdirectives@latest
 ```
 
 ## Usage
