@@ -1,4 +1,4 @@
-module github.com/leighmcculloch/gocheckdirectives
+module github.com/leighmcculloch/gocheckcompilerdirectives
 
 go 1.19
 

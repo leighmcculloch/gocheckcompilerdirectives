@@ -1,22 +1,23 @@
-package checkdirectives_test
+package checkcompilerdirectives_test
 
 import (
 	"go/ast"
 	"testing"
 
-	"github.com/leighmcculloch/gocheckdirectives/checkdirectives"
 	"golang.org/x/tools/go/analysis"
 	"golang.org/x/tools/go/analysis/analysistest"
+
+	"github.com/leighmcculloch/gocheckcompilerdirectives/checkcompilerdirectives"
 )
 
 func TestRun(t *testing.T) {
 	testdata := analysistest.TestData()
-	analyzer := checkdirectives.Analyzer()
+	analyzer := checkcompilerdirectives.Analyzer()
 	analysistest.Run(t, testdata, analyzer)
 }
 
 func FuzzRun(f *testing.F) {
-	analyzer := checkdirectives.Analyzer()
+	analyzer := checkcompilerdirectives.Analyzer()
 	f.Add("hello world")
 	f.Add("go:generate echo hello world")
 	f.Add("go:embed")
@@ -40,7 +41,7 @@ func FuzzRun(f *testing.F) {
 }
 
 func BenchmarkRun(b *testing.B) {
-	analyzer := checkdirectives.Analyzer()
+	analyzer := checkcompilerdirectives.Analyzer()
 	pass := analysis.Pass{
 		Report: func(d analysis.Diagnostic) {},
 		Files: []*ast.File{

@@ -1,16 +1,18 @@
-# gocheckdirectives
+# gocheckcompilerdirectives
 
-Check that go directives (`//go:` comments) are valid and catch easy mistakes.
+Check that go compiler directives (`//go:` comments) are valid and catch easy
+mistakes.
 
-For example, directives like `//go:generate`, `//go:embed`, `//go:build`, etc.
+Compiler directives are comments like `//go:generate`, `//go:embed`,
+`//go:build`, etc.
 
 ## Why
 
-Go directives are comments in the form of `//go:` that provide an instruction
-to the compiler.
+Go compiler directives are comments in the form of `//go:` that provide an
+instruction to the compiler.
 
-Go directives are easy to make mistakes with. The linter will detect the
-following mistakes.
+The directives are easy to make mistakes with. The linter will detect the
+following mistakes:
 
 1. Adding a space in between the comment bars and the first character, e.g. `//
 go:`, will cause the compiler to silently ignore the comment.
@@ -20,15 +22,15 @@ go:`, will cause the compiler to silently ignore the comment.
 ## Install
 
 ```
-go install github.com/leighmcculloch/gocheckdirectives@latest
+go install github.com/leighmcculloch/gocheckcompilerdirectives@latest
 ```
 
 ## Usage
 
 ```
-gocheckdirectives [package]
+gocheckcompilerdirectives [package]
 ```
 
 ```
-gocheckdirectives ./...
+gocheckcompilerdirectives ./...
 ```

@@ -1,5 +1,5 @@
 builds:
-- main: ./cmd/gocheckdirectives
+- main: ./cmd/gocheckcompilerdirectives
   targets: [go_first_class]
   flags: [-trimpath]
   mod_timestamp: '{{.CommitTimestamp}}'
