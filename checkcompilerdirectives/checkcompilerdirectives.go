@@ -85,6 +85,7 @@ var known = []string{
 	"cgo_import_static",
 	"cgo_ldflag",
 	"cgo_unsafe_args",
+	"debug",
 	"embed",
 	"generate",
 	"linkname",
