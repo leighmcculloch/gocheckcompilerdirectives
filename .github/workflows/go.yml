@@ -23,11 +23,15 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - if: ${{ github.event_name != 'release' }}
-      uses: goreleaser/goreleaser-action@8f67e590f2d095516493f017008adc464e63adb1
+      uses: goreleaser/goreleaser-action@90a3faa9d0182683851fbfa97ca1a2cb983bfca3
       with:
-        args: release --rm-dist --snapshot
+        # either 'goreleaser' (default) or 'goreleaser-pro'
+        distribution: goreleaser
+        # 'latest', 'nightly', or a semver
+        version: '~> v2'
+        args: release --clean --snapshot
     - if: ${{ github.event_name == 'release' }}
-      uses: goreleaser/goreleaser-action@8f67e590f2d095516493f017008adc464e63adb1
+      uses: goreleaser/goreleaser-action@90a3faa9d0182683851fbfa97ca1a2cb983bfca3
       with:
         args: release --rm-dist
       env:
