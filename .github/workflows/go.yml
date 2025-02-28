@@ -18,7 +18,7 @@ jobs:
     - run: go test -v ./...
 
   build-and-upload:
-    needs: [lint, test]
+    needs: [test]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
