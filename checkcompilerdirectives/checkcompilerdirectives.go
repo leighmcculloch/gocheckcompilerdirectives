@@ -103,4 +103,5 @@ var known = []string{
 	"wasmimport",
 	"wasmexport",
 	"yeswritebarrierrec",
+	"fix",
 }
