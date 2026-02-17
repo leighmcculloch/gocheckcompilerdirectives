@@ -1,6 +1,6 @@
 module 4d63.com/gocheckcompilerdirectives
 
-go 1.24.0
+go 1.26.0
 
 require golang.org/x/tools v0.42.0
 
