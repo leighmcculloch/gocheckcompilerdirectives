@@ -86,6 +86,7 @@ var known = []string{
 	"cgo_unsafe_args",
 	"debug",
 	"embed",
+	"fix",
 	"generate",
 	"linkname",
 	"nocheckptr",
@@ -103,5 +104,4 @@ var known = []string{
 	"wasmimport",
 	"wasmexport",
 	"yeswritebarrierrec",
-	"fix",
 }
