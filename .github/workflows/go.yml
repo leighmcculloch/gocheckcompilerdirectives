@@ -13,8 +13,14 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go-version: ['1.22', 'oldstable', 'stable']
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v6
+    - uses: actions/setup-go@v6
+      with:
+        go-version: ${{ matrix.go-version }}
     - run: go test -v ./...
 
   build-and-upload:
