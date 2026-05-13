@@ -18,3 +18,8 @@ var Value string
 //    go:embed // want "compiler directive contains space: //    go:embed"
 
 //go:genrate // want "compiler directive unrecognized: //go:genrate"
+
+//go:fix inline
+func inlined() int {
+	return 6
+}
